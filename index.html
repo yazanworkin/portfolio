@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yazan – Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Mobile toggle -->
+  <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar" id="sidebar">
+
+      <header>
+      <div class="sidebar-brand">
+        <h1>Yazan<br><span>Portfolio</span></h1>
+        <p>CPIT-405 · Spring 2026</p>
+      </div>
+
+      <div class="sidebar-avatar">YA</div>
+
+      <nav class="sidebar-nav">
+        <p class="nav-label">Navigation</p>
+        <ul>
+          <li>
+            <a href="index.html" class="active">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="cv.html">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              CV / Resume
+            </a>
+          </li>
+          <li>
+            <a href="labs.html">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+              Labs & Projects
+            </a>
+          </li>
+          <li>
+            <a href="contact.html">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+      <div class="sidebar-info">
+        <div class="info-row">
+          <div class="info-item">
+            <span>University</span>
+            <span>KAU – FCIT</span>
+          </div>
+          <div class="info-item">
+            <span>Email</span>
+            <a href="mailto:ybasnawi@stu.kau.edu.sa">ybasnawi@stu.kau.edu.sa</a>
+          </div>
+        </div>
+        <div class="sidebar-socials">
+          <a href="https://github.com/yazanworkin" target="_blank" class="social-icon" title="GitHub">GH</a>
+          <a href="https://www.linkedin.com/in/yazan-basnawi" target="_blank" class="social-icon" title="LinkedIn">in</a>
+          <a href="tel:+966543111505" class="social-icon" title="Phone">☎</a>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ===== Main ===== -->
+    <main>
+
+      <!-- Hero -->
+      <div class="page-header">
+        <h2>Hello, World <span class="highlight">.</span></h2>
+        <span class="breadcrumb">Home</span>
+      </div>
+
+      <section>
+        <div class="hero">
+          <div class="hero-text">
+            <div class="hero-badge">Available for opportunities</div>
+            <h2>
+              I'm
+              <span class="name-accent">Yazan Basnawi</span>
+              IT Student & Developer
+            </h2>
+            <div style="display:inline-flex; align-items:center; gap:0.5rem; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:0.35rem 0.9rem; font-size:0.78rem; color:var(--text-muted); margin-bottom:1rem;">
+              <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; font-size:0.65rem;">Student ID</span>
+              <span style="font-family:var(--font-display); font-weight:700; color:var(--accent); letter-spacing:0.05em;">2244293</span>
+            </div>
+            <p>
+              A passionate Information Technology student at King Abdulaziz University,
+              Faculty of Computing & Information Technology. I build web applications,
+              explore cybersecurity, and compete in CTF challenges.
+            </p>
+            <div class="hero-cta">
+              <a href="cv.html" class="btn btn-primary">View My CV</a>
+              <a href="labs.html" class="btn btn-outline">My Projects</a>
+              <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="stat-num">2+</span>
+            <span class="stat-label">Projects Built</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">6+</span>
+            <span class="stat-label">Labs Completed</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">4th</span>
+            <span class="stat-label">Year Student</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">KAU</span>
+            <span class="stat-label">University</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section>
+        <p class="section-title">About Me</p>
+        <div class="card">
+          <p style="color: var(--text-muted); line-height: 1.8; font-size: 0.92rem;">
+            I'm a fourth-year Information Technology student at King Abdulaziz University's Faculty
+            of Computing & Information Technology in Jeddah, Saudi Arabia. My academic journey
+            has been shaped by a deep curiosity for how technology works — from web development
+            and databases to network security and artificial intelligence.
+          </p>
+          <br>
+          <p style="color: var(--text-muted); line-height: 1.8; font-size: 0.92rem;">
+            I completed an IT internship at East Jeddah Hospital, am an active member of KAU's
+            cybersecurity club, and participate in CTF cybersecurity competitions through the university's
+            security team on FlagYard. I enjoy transforming ideas into functional, polished
+            digital products.
+          </p>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section>
+        <p class="section-title">Technical Skills</p>
+        <div class="chips">
+          <span class="chip featured">HTML5</span>
+          <span class="chip featured">CSS3</span>
+          <span class="chip featured">JavaScript</span>
+          <span class="chip">React</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">Java</span>
+          <span class="chip">Python</span>
+          <span class="chip">Firebase</span>
+          <span class="chip">MySQL</span>
+          <span class="chip">Git & GitHub</span>
+          <span class="chip">Kali Linux</span>
+          <span class="chip">Wireshark</span>
+          <span class="chip">Packet Tracer</span>
+          <span class="chip">Figma</span>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <span>© 2026 Yazan Basnawi · <span>CPIT-405 Portfolio</span> · KAU</span>
+    <span>Spring 2026</span>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    btn.addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.addEventListener('click', e => {
+      if (!sidebar.contains(e.target) && !btn.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+
+</body>
+</html>

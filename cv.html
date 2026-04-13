@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yazan – CV / Resume</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar" id="sidebar">
+
+      <header>
+      <div class="sidebar-brand">
+        <h1>Yazan<br><span>Portfolio</span></h1>
+        <p>CPIT-405 · Spring 2026</p>
+      </div>
+
+      <div class="sidebar-avatar">YA</div>
+
+      <nav class="sidebar-nav">
+        <p class="nav-label">Navigation</p>
+        <ul>
+          <li>
+            <a href="index.html">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="cv.html" class="active">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              CV / Resume
+            </a>
+          </li>
+          <li>
+            <a href="labs.html">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+              Labs & Projects
+            </a>
+          </li>
+          <li>
+            <a href="contact.html">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+      <div class="sidebar-info">
+        <div class="info-row">
+          <div class="info-item">
+            <span>University</span>
+            <span>KAU – FCIT</span>
+          </div>
+          <div class="info-item">
+            <span>Email</span>
+            <a href="mailto:ybasnawi@stu.kau.edu.sa">ybasnawi@stu.kau.edu.sa</a>
+          </div>
+        </div>
+        <div class="sidebar-socials">
+          <a href="https://github.com/yazanworkin" target="_blank" class="social-icon" title="GitHub">GH</a>
+          <a href="https://www.linkedin.com/in/yazan-basnawi" target="_blank" class="social-icon" title="LinkedIn">in</a>
+          <a href="tel:+966543111505" class="social-icon" title="Phone">☎</a>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ===== Main ===== -->
+    <main>
+
+      <div class="page-header">
+        <h2>Curriculum <span class="highlight">Vitae</span></h2>
+        <span class="breadcrumb">CV / Resume</span>
+      </div>
+
+      <!-- Contact info bar -->
+      <section>
+        <div class="card" style="display:flex; flex-wrap:wrap; gap:1.5rem; align-items:center;">
+          <div>
+            <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin-bottom:2px;">Name</div>
+            <div style="font-family:var(--font-display); font-weight:700; font-size:0.9rem;">Yazan Basnawi</div>
+          </div>
+          <div>
+            <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin-bottom:2px;">Email</div>
+            <a href="mailto:ybasnawi@stu.kau.edu.sa" style="font-size:0.82rem; color:var(--text-muted);">ybasnawi@stu.kau.edu.sa</a>
+          </div>
+          <div>
+            <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin-bottom:2px;">Phone</div>
+            <a href="tel:+966543111505" style="font-size:0.82rem; color:var(--text-muted);">+966 54 311 1505</a>
+          </div>
+          <div>
+            <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin-bottom:2px;">Location</div>
+            <div style="font-size:0.82rem; color:var(--text-muted);">Jeddah, Saudi Arabia</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cv-grid">
+
+        <!-- Left column -->
+        <div>
+
+          <!-- Education -->
+          <section>
+            <p class="section-title">Education</p>
+            <div class="card">
+              <div class="cv-timeline">
+
+                <div class="cv-item">
+                  <div class="cv-year">2021 – Present</div>
+                  <div class="cv-title">B.Sc. Information Technology</div>
+                  <div class="cv-sub">King Abdulaziz University · Jeddah, SA</div>
+                  <div class="cv-desc">Faculty of Computing & Information Technology. Focused on web development, databases, networking, security, and AI.</div>
+                </div>
+
+                <div class="cv-item">
+                  <div class="cv-year">2021</div>
+                  <div class="cv-title">High School Diploma</div>
+                  <div class="cv-sub">Secondary School · Jeddah, SA</div>
+                  <div class="cv-desc">Science track. Strong foundation in mathematics and physics.</div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Experience -->
+          <section>
+            <p class="section-title">Experience</p>
+            <div class="card">
+              <div class="cv-timeline">
+
+                <div class="cv-item">
+                  <div class="cv-year">2024</div>
+                  <div class="cv-title">IT Intern</div>
+                  <div class="cv-sub">East Jeddah Hospital · Jeddah, SA</div>
+                  <div class="cv-desc">Supported IT infrastructure, assisted in network maintenance, and gained hands-on experience in hospital information systems.</div>
+                </div>
+
+                <div class="cv-item">
+                  <div class="cv-year">2023 – Present</div>
+                  <div class="cv-title">CTF Competitor</div>
+                  <div class="cv-sub">KAU Cybersecurity Team · FlagYard</div>
+                  <div class="cv-desc">Active participant in Capture-The-Flag competitions covering web exploitation, binary analysis, and forensics.</div>
+                </div>
+
+                <div class="cv-item">
+                  <div class="cv-year">2022 – Present</div>
+                  <div class="cv-title">Cybersecurity Club Member</div>
+                  <div class="cv-sub">KAU Cybersecurity Club · King Abdulaziz University</div>
+                  <div class="cv-desc">Engaged in workshops, CTF training, and hands-on security labs covering network analysis, penetration testing, and digital forensics.</div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- Right column -->
+        <div>
+
+          <!-- Skills -->
+          <section>
+            <p class="section-title">Technical Skills</p>
+            <div class="card">
+              <div class="skill-bar-item">
+                <div class="skill-bar-header"><span>HTML & CSS</span><span>90%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-header"><span>JavaScript</span><span>75%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-header"><span>Java</span><span>80%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-header"><span>Python</span><span>70%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-header"><span>React & Node.js</span><span>65%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:65%"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-header"><span>Databases (MySQL, Firebase)</span><span>72%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:72%"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-header"><span>Cybersecurity / Networking</span><span>68%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="width:68%"></div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Achievements -->
+          <section>
+            <p class="section-title">Achievements</p>
+            <div class="card">
+              <div class="cv-timeline">
+
+                <div class="cv-item">
+                  <div class="cv-year">2023</div>
+                  <div class="cv-title">CTF Top Performer</div>
+                  <div class="cv-sub">FlagYard Platform</div>
+                  <div class="cv-desc">Achieved top rankings in multiple national-level cybersecurity competitions.</div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Languages -->
+          <section>
+            <p class="section-title">Languages</p>
+            <div class="card" style="display:flex; gap:1rem; flex-wrap:wrap;">
+              <div style="flex:1; min-width:120px; background:var(--bg-card2); border:1px solid var(--border); border-radius:8px; padding:1rem; text-align:center;">
+                <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:var(--accent);">AR</div>
+                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;">Arabic</div>
+                <div style="font-size:0.65rem; color:var(--text-dim);">Native</div>
+              </div>
+              <div style="flex:1; min-width:120px; background:var(--bg-card2); border:1px solid var(--border); border-radius:8px; padding:1rem; text-align:center;">
+                <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:var(--accent);">EN</div>
+                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;">English</div>
+                <div style="font-size:0.65rem; color:var(--text-dim);">Proficient</div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    <span>© 2026 Yazan Basnawi · <span>CPIT-405 Portfolio</span> · KAU</span>
+    <span>Spring 2026</span>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    btn.addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.addEventListener('click', e => {
+      if (!sidebar.contains(e.target) && !btn.contains(e.target)) sidebar.classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>

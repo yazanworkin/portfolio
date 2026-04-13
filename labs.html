@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yazan – Labs & Projects</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar" id="sidebar">
+
+      <header>
+      <div class="sidebar-brand">
+        <h1>Yazan<br><span>Portfolio</span></h1>
+        <p>CPIT-405 · Spring 2026</p>
+      </div>
+
+      <div class="sidebar-avatar">YA</div>
+
+      <nav class="sidebar-nav">
+        <p class="nav-label">Navigation</p>
+        <ul>
+          <li>
+            <a href="index.html">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="cv.html">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              CV / Resume
+            </a>
+          </li>
+          <li>
+            <a href="labs.html" class="active">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+              Labs & Projects
+            </a>
+          </li>
+          <li>
+            <a href="contact.html">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+      <div class="sidebar-info">
+        <div class="info-row">
+          <div class="info-item">
+            <span>University</span>
+            <span>KAU – FCIT</span>
+          </div>
+          <div class="info-item">
+            <span>Email</span>
+            <a href="mailto:ybasnawi@stu.kau.edu.sa">ybasnawi@stu.kau.edu.sa</a>
+          </div>
+        </div>
+        <div class="sidebar-socials">
+          <a href="https://github.com/yazanworkin" target="_blank" class="social-icon" title="GitHub">GH</a>
+          <a href="https://www.linkedin.com/in/yazan-basnawi" target="_blank" class="social-icon" title="LinkedIn">in</a>
+          <a href="tel:+966543111505" class="social-icon" title="Phone">☎</a>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ===== Main ===== -->
+    <main>
+
+      <div class="page-header">
+        <h2>Labs & <span class="highlight">Projects</span></h2>
+        <span class="breadcrumb">Labs & Projects</span>
+      </div>
+
+      <!-- Completed Labs -->
+      <section>
+        <p class="section-title">Completed Labs – CPIT-405</p>
+        <div class="labs-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Lab</th>
+                <th>Topic</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lab 1</td>
+                <td>Setup & Environment</td>
+                <td style="color:var(--text-dim); font-size:0.78rem;">VS Code setup, GitHub account, first HTML file</td>
+                <td><span class="status-badge status-done">Completed</span></td>
+                <td><a href="https://yazanworkin.github.io/CPIT-405/lab-1" target="_blank" class="table-link">Open ↗</a></td>
+              </tr>
+              <tr>
+                <td>Lab 2</td>
+                <td>HTML Basics</td>
+                <td style="color:var(--text-dim); font-size:0.78rem;">HTML structure, tags, forms, tables, lists</td>
+                <td><span class="status-badge status-done">Completed</span></td>
+                <td><a href="https://yazanworkin.github.io/CPIT-405/LAB-2/index.html" target="_blank" class="table-link">Open ↗</a></td>
+              </tr>
+              <tr>
+                <td>Lab 3</td>
+                <td>HTML Advanced</td>
+                <td style="color:var(--text-dim); font-size:0.78rem;">Semantic elements, media, accessibility basics</td>
+                <td><span class="status-badge status-done">Completed</span></td>
+                <td><a href="https://yazanworkin.github.io/CPIT-405/lab-3/index.html" target="_blank" class="table-link">Open ↗</a></td>
+              </tr>
+              <tr>
+                <td>Lab 4</td>
+                <td>CSS Basics</td>
+                <td style="color:var(--text-dim); font-size:0.78rem;">Selectors, box model, colors, typography</td>
+                <td><span class="status-badge status-done">Completed</span></td>
+                <td><a href="https://yazanworkin.github.io/CPIT-405/lab-4/index.html" target="_blank" class="table-link">Open ↗</a></td>
+              </tr>
+              <tr>
+                <td>Lab 5</td>
+                <td>CSS Layout</td>
+                <td style="color:var(--text-dim); font-size:0.78rem;">Flexbox, Grid, responsive design, media queries</td>
+                <td><span class="status-badge status-done">Completed</span></td>
+                <td><a href="https://yazanworkin.github.io/CPIT-405/lab-5/index.html" target="_blank" class="table-link">Open ↗</a></td>
+              </tr>
+              <tr>
+                <td>Lab 6</td>
+                <td>Portfolio Phase 1</td>
+                <td style="color:var(--text-dim); font-size:0.78rem;">Multi-page portfolio website with HTML & CSS</td>
+                <td><span class="status-badge status-done">Completed</span></td>
+                <td><a href="https://yazanworkin.github.io/CPIT-405/lab-6/index.html" target="_blank" class="table-link">Open ↗</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section>
+        <p class="section-title">Completed Projects</p>
+        <div class="card-grid">
+
+          <div class="project-card">
+            <h3>GameBox 🎮</h3>
+            <p>A social game review platform built with React, Node.js, and Firebase. Integrates the IGDB API for rich game metadata, with user auth, reviews, and a community feed.</p>
+            <div class="card-footer">
+              <div class="chips">
+                <span class="chip">React</span>
+                <span class="chip">Firebase</span>
+                <span class="chip">Node.js</span>
+              </div>
+              <a href="#" class="table-link">View ↗</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <h3>Habit Tracker ✅</h3>
+            <p>A Java desktop application for tracking daily habits with SQLite persistence. Built with NetBeans and Java Swing as part of CPIT-305.</p>
+            <div class="card-footer">
+              <div class="chips">
+                <span class="chip">Java</span>
+                <span class="chip">SQLite</span>
+                <span class="chip">NetBeans</span>
+              </div>
+              <a href="#" class="table-link">View ↗</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <span>© 2026 Yazan Basnawi · <span>CPIT-405 Portfolio</span> · KAU</span>
+    <span>Spring 2026</span>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    btn.addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.addEventListener('click', e => {
+      if (!sidebar.contains(e.target) && !btn.contains(e.target)) sidebar.classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>
