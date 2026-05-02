@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yazan – Pomodoro Timer</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .app-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* Mode tabs */
+    .mode-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .mode-tab {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .mode-tab.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .mode-tab:hover:not(.active) {
+      border-color: var(--accent-border);
+      color: var(--text);
+    }
+
+    /* Timer ring */
+    .timer-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .timer-ring-wrap {
+      position: relative;
+      width: 240px;
+      height: 240px;
+    }
+
+    .timer-ring-wrap svg {
+      transform: rotate(-90deg);
+      width: 240px;
+      height: 240px;
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 8;
+    }
+
+    .ring-progress {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 691;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear, stroke 0.3s;
+      filter: drop-shadow(0 0 8px rgba(200,255,0,0.5));
+    }
+
+    .ring-progress.break {
+      stroke: #00d4ff;
+      filter: drop-shadow(0 0 8px rgba(0,212,255,0.5));
+    }
+
+    .timer-display {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .timer-time {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .timer-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Controls */
+    .timer-controls {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-timer {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 1.1rem;
+    }
+
+    .btn-timer:hover {
+      border-color: var(--accent-border);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .btn-timer.primary {
+      width: 68px;
+      height: 68px;
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      font-size: 1.4rem;
+    }
+
+    .btn-timer.primary:hover {
+      background: #d4ff26;
+    }
+
+    /* Session tracker */
+    .session-dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .session-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.3s;
+    }
+
+    .session-dot.done {
+      background: var(--accent);
+      box-shadow: 0 0 6px rgba(200,255,0,0.5);
+    }
+
+    /* Right panel */
+    .pomodoro-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+
+    .info-card h3 {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    /* Settings sliders */
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .setting-row label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .setting-row input[type="range"] {
+      width: 100px;
+      accent-color: var(--accent);
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .setting-val {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      width: 36px;
+      text-align: right;
+    }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .stat-box {
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .stat-box .num {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-box .lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    /* Log */
+    .session-log {
+      max-height: 150px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .log-entry {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .log-entry::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .log-entry.break-log::before {
+      background: #00d4ff;
+    }
+
+    .log-empty {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* Notification bar */
+    .notif-bar {
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      border-radius: 8px;
+      padding: 0.65rem 1rem;
+      font-size: 0.82rem;
+      color: var(--accent);
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .notif-bar.show { display: flex; }
+
+    @media (max-width: 900px) {
+      .app-layout { grid-template-columns: 1fr; }
+      .timer-ring-wrap { width: 200px; height: 200px; }
+      .timer-ring-wrap svg { width: 200px; height: 200px; }
+      .ring-progress { stroke-dasharray: 565; }
+      .timer-time { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <header>
+        <div class="sidebar-brand">
+          <h1>Yazan<br><span>Portfolio</span></h1>
+          <p>CPIT-405 · Spring 2026</p>
+        </div>
+        <div class="sidebar-avatar">YA</div>
+        <nav class="sidebar-nav">
+          <p class="nav-label">Navigation</p>
+          <ul>
+            <li><a href="index.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a></li>
+            <li><a href="cv.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>CV / Resume</a></li>
+            <li><a href="labs.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Labs</a></li>
+            <li><a href="myworks.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>My Works</a></li>
+            <li><a href="contact.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="sidebar-info">
+        <div class="info-row">
+          <div class="info-item"><span>App</span><span>Pomodoro Timer</span></div>
+          <div class="info-item"><span>Type</span><span>JavaScript · No API</span></div>
+        </div>
+        <div class="sidebar-socials">
+          <a href="https://github.com/yazanworkin" target="_blank" class="social-icon">GH</a>
+          <a href="https://www.linkedin.com/in/yazan-basnawi" target="_blank" class="social-icon">in</a>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="page-header">
+        <h2>Pomodoro <span class="highlight">Timer</span></h2>
+        <span class="breadcrumb">App 1 · JavaScript</span>
+      </div>
+
+      <div id="notifBar" class="notif-bar">
+        <span id="notifText">🍅 Time's up!</span>
+      </div>
+
+      <section>
+        <div class="app-layout">
+
+          <!-- Left: Timer -->
+          <div>
+            <div class="mode-tabs">
+              <button class="mode-tab active" id="tab-work" onclick="switchMode('work')">🍅 Focus</button>
+              <button class="mode-tab" id="tab-short" onclick="switchMode('short')">☕ Short Break</button>
+              <button class="mode-tab" id="tab-long" onclick="switchMode('long')">🛌 Long Break</button>
+            </div>
+
+            <div class="timer-container">
+              <div class="timer-ring-wrap">
+                <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+                  <circle class="ring-bg" cx="120" cy="120" r="110"/>
+                  <circle class="ring-progress" id="ringProgress" cx="120" cy="120" r="110"/>
+                </svg>
+                <div class="timer-display">
+                  <div class="timer-time" id="timerDisplay">25:00</div>
+                  <div class="timer-label" id="timerLabel">Focus Time</div>
+                </div>
+              </div>
+
+              <div class="session-dots" id="sessionDots">
+                <div class="session-dot"></div>
+                <div class="session-dot"></div>
+                <div class="session-dot"></div>
+                <div class="session-dot"></div>
+              </div>
+
+              <div class="timer-controls">
+                <button class="btn-timer" onclick="resetTimer()" title="Reset">↺</button>
+                <button class="btn-timer primary" id="startBtn" onclick="toggleTimer()">▶</button>
+                <button class="btn-timer" onclick="skipSession()" title="Skip">⏭</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Settings + Stats -->
+          <div class="pomodoro-info">
+
+            <div class="info-card">
+              <h3>⚙️ Settings</h3>
+              <div class="setting-row">
+                <label>Focus Duration</label>
+                <input type="range" id="workDur" min="1" max="60" value="25" oninput="updateSettings()" />
+                <span class="setting-val" id="workVal">25m</span>
+              </div>
+              <div class="setting-row">
+                <label>Short Break</label>
+                <input type="range" id="shortDur" min="1" max="30" value="5" oninput="updateSettings()" />
+                <span class="setting-val" id="shortVal">5m</span>
+              </div>
+              <div class="setting-row">
+                <label>Long Break</label>
+                <input type="range" id="longDur" min="5" max="60" value="15" oninput="updateSettings()" />
+                <span class="setting-val" id="longVal">15m</span>
+              </div>
+              <div class="setting-row">
+                <label>Sessions until long break</label>
+                <input type="range" id="sessionCount" min="2" max="8" value="4" oninput="updateSettings()" />
+                <span class="setting-val" id="sessionVal">4</span>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <h3>📊 Today's Stats</h3>
+              <div class="stats-grid">
+                <div class="stat-box">
+                  <div class="num" id="statSessions">0</div>
+                  <div class="lbl">Sessions</div>
+                </div>
+                <div class="stat-box">
+                  <div class="num" id="statMinutes">0</div>
+                  <div class="lbl">Minutes</div>
+                </div>
+                <div class="stat-box">
+                  <div class="num" id="statBreaks">0</div>
+                  <div class="lbl">Breaks</div>
+                </div>
+                <div class="stat-box">
+                  <div class="num" id="statStreak">0</div>
+                  <div class="lbl">Streak 🔥</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <h3>📋 Session Log</h3>
+              <div class="session-log" id="sessionLog">
+                <div class="log-empty">No sessions yet. Start focusing!</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <span>© 2026 Yazan Basnawi · <span>CPIT-405 Portfolio</span> · KAU</span>
+    <span>Spring 2026</span>
+  </footer>
+
+  <script>
+    // Sidebar toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.addEventListener('click', e => {
+      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) sidebar.classList.remove('open');
+    });
+
+    // ===== Pomodoro Logic =====
+    const CIRCUMFERENCE = 2 * Math.PI * 110; // 691.15
+
+    let mode = 'work';
+    let isRunning = false;
+    let interval = null;
+    let totalSeconds = 0;
+    let remainingSeconds = 0;
+    let sessionsCompleted = 0;
+    let totalMinutes = 0;
+    let totalBreaks = 0;
+    let streak = 0;
+    let logEntries = [];
+
+    // Load stats from localStorage
+    const saved = JSON.parse(localStorage.getItem('pomodoroStats') || '{}');
+    if (saved.date === new Date().toDateString()) {
+      sessionsCompleted = saved.sessions || 0;
+      totalMinutes = saved.minutes || 0;
+      totalBreaks = saved.breaks || 0;
+      streak = saved.streak || 0;
+      logEntries = saved.log || [];
+    }
+
+    function getDurations() {
+      return {
+        work: parseInt(document.getElementById('workDur').value) * 60,
+        short: parseInt(document.getElementById('shortDur').value) * 60,
+        long: parseInt(document.getElementById('longDur').value) * 60,
+        sessions: parseInt(document.getElementById('sessionCount').value)
+      };
+    }
+
+    function updateSettings() {
+      const d = getDurations();
+      document.getElementById('workVal').textContent = d.work / 60 + 'm';
+      document.getElementById('shortVal').textContent = d.short / 60 + 'm';
+      document.getElementById('longVal').textContent = d.long / 60 + 'm';
+      document.getElementById('sessionVal').textContent = d.sessions;
+      if (!isRunning) {
+        totalSeconds = d[mode];
+        remainingSeconds = totalSeconds;
+        updateDisplay();
+        updateRing();
+      }
+    }
+
+    function switchMode(m) {
+      if (isRunning) return;
+      mode = m;
+      document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + m).classList.add('active');
+      const labels = { work: 'Focus Time', short: 'Short Break', long: 'Long Break' };
+      document.getElementById('timerLabel').textContent = labels[m];
+      const ring = document.getElementById('ringProgress');
+      ring.classList.toggle('break', m !== 'work');
+      totalSeconds = getDurations()[m];
+      remainingSeconds = totalSeconds;
+      updateDisplay();
+      updateRing();
+    }
+
+    function updateDisplay() {
+      const m = Math.floor(remainingSeconds / 60).toString().padStart(2, '0');
+      const s = (remainingSeconds % 60).toString().padStart(2, '0');
+      document.getElementById('timerDisplay').textContent = m + ':' + s;
+      document.title = m + ':' + s + ' – Pomodoro';
+    }
+
+    function updateRing() {
+      const progress = remainingSeconds / totalSeconds;
+      const offset = CIRCUMFERENCE * (1 - progress);
+      document.getElementById('ringProgress').style.strokeDashoffset = offset;
+    }
+
+    function updateSessionDots() {
+      const dots = document.querySelectorAll('.session-dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('done', i < (sessionsCompleted % getDurations().sessions));
+      });
+    }
+
+    function updateStats() {
+      document.getElementById('statSessions').textContent = sessionsCompleted;
+      document.getElementById('statMinutes').textContent = totalMinutes;
+      document.getElementById('statBreaks').textContent = totalBreaks;
+      document.getElementById('statStreak').textContent = streak;
+      // Save to localStorage
+      localStorage.setItem('pomodoroStats', JSON.stringify({
+        date: new Date().toDateString(),
+        sessions: sessionsCompleted,
+        minutes: totalMinutes,
+        breaks: totalBreaks,
+        streak,
+        log: logEntries
+      }));
+    }
+
+    function addLog(text, isBreak = false) {
+      const now = new Date();
+      const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+      logEntries.unshift({ text, time, isBreak });
+      if (logEntries.length > 20) logEntries.pop();
+      renderLog();
+    }
+
+    function renderLog() {
+      const container = document.getElementById('sessionLog');
+      if (logEntries.length === 0) {
+        container.innerHTML = '<div class="log-empty">No sessions yet. Start focusing!</div>';
+        return;
+      }
+      container.innerHTML = logEntries.map(e =>
+        `<div class="log-entry ${e.isBreak ? 'break-log' : ''}">
+          <span style="color:var(--text-dim);font-size:0.65rem;">${e.time}</span>
+          ${e.text}
+        </div>`
+      ).join('');
+    }
+
+    function showNotif(text) {
+      const bar = document.getElementById('notifBar');
+      document.getElementById('notifText').textContent = text;
+      bar.classList.add('show');
+      setTimeout(() => bar.classList.remove('show'), 4000);
+      // Play a beep
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.5);
+      } catch(e) {}
+    }
+
+    function sessionComplete() {
+      clearInterval(interval);
+      isRunning = false;
+      document.getElementById('startBtn').textContent = '▶';
+
+      if (mode === 'work') {
+        sessionsCompleted++;
+        totalMinutes += Math.floor(getDurations().work / 60);
+        streak++;
+        addLog(`✅ Focus session #${sessionsCompleted} completed`);
+        updateSessionDots();
+        const d = getDurations();
+        if (sessionsCompleted % d.sessions === 0) {
+          showNotif('🎉 Long break time! You earned it.');
+          switchMode('long');
+        } else {
+          showNotif('☕ Short break time! Relax for a bit.');
+          switchMode('short');
+        }
+      } else {
+        totalBreaks++;
+        addLog(`☕ Break completed`, true);
+        showNotif('🍅 Back to focus! You got this.');
+        switchMode('work');
+      }
+      updateStats();
+      renderLog();
+    }
+
+    function toggleTimer() {
+      if (isRunning) {
+        clearInterval(interval);
+        isRunning = false;
+        document.getElementById('startBtn').textContent = '▶';
+      } else {
+        if (remainingSeconds === 0) {
+          totalSeconds = getDurations()[mode];
+          remainingSeconds = totalSeconds;
+        }
+        isRunning = true;
+        document.getElementById('startBtn').textContent = '⏸';
+        interval = setInterval(() => {
+          remainingSeconds--;
+          updateDisplay();
+          updateRing();
+          if (remainingSeconds <= 0) sessionComplete();
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(interval);
+      isRunning = false;
+      document.getElementById('startBtn').textContent = '▶';
+      totalSeconds = getDurations()[mode];
+      remainingSeconds = totalSeconds;
+      updateDisplay();
+      updateRing();
+    }
+
+    function skipSession() {
+      clearInterval(interval);
+      isRunning = false;
+      document.getElementById('startBtn').textContent = '▶';
+      sessionComplete();
+    }
+
+    // Init
+    totalSeconds = getDurations()[mode];
+    remainingSeconds = totalSeconds;
+    updateDisplay();
+    updateRing();
+    updateStats();
+    renderLog();
+    updateSessionDots();
+  </script>
+</body>
+</html>

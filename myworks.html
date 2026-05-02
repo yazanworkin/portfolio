@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yazan – My Works</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .works-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 700px) {
+      .works-grid { grid-template-columns: 1fr; }
+    }
+
+    .work-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.25s;
+      position: relative;
+    }
+
+    .work-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #00d4ff);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .work-card:hover {
+      border-color: var(--accent-border);
+      transform: translateY(-3px);
+    }
+
+    .work-card:hover::before { opacity: 1; }
+
+    .work-card-preview {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      background: var(--bg-card2);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-card-preview .preview-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      font-size: 8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .work-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .badge-js {
+      background: rgba(200,255,0,0.15);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+    }
+
+    .badge-api {
+      background: rgba(0,212,255,0.1);
+      color: #00d4ff;
+      border: 1px solid rgba(0,212,255,0.25);
+    }
+
+    .work-card-body {
+      padding: 1.5rem;
+    }
+
+    .work-card-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .work-card-body p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .work-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .work-tech-chips {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .work-tech-chip {
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+
+    .btn-open-app {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.1rem;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-radius: 7px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-open-app:hover {
+      background: #d4ff26;
+      transform: translateY(-1px);
+    }
+
+    /* Feature list */
+    .feature-list {
+      list-style: none;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .feature-list li {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .feature-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.7rem;
+    }
+
+    /* Also show GameBox and Habit Tracker */
+    .prev-projects {
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <header>
+        <div class="sidebar-brand">
+          <h1>Yazan<br><span>Portfolio</span></h1>
+          <p>CPIT-405 · Spring 2026</p>
+        </div>
+        <div class="sidebar-avatar">YA</div>
+        <nav class="sidebar-nav">
+          <p class="nav-label">Navigation</p>
+          <ul>
+            <li><a href="index.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a></li>
+            <li><a href="cv.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>CV / Resume</a></li>
+            <li><a href="labs.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Labs</a></li>
+            <li><a href="myworks.html" class="active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>My Works</a></li>
+            <li><a href="contact.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="sidebar-info">
+        <div class="info-row">
+          <div class="info-item"><span>University</span><span>KAU – FCIT</span></div>
+          <div class="info-item"><span>Email</span><a href="mailto:ybasnawi@stu.kau.edu.sa">ybasnawi@stu.kau.edu.sa</a></div>
+        </div>
+        <div class="sidebar-socials">
+          <a href="https://github.com/yazanworkin" target="_blank" class="social-icon">GH</a>
+          <a href="https://www.linkedin.com/in/yazan-basnawi" target="_blank" class="social-icon">in</a>
+          <a href="tel:+966543111505" class="social-icon">☎</a>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="page-header">
+        <h2>My <span class="highlight">Works</span></h2>
+        <span class="breadcrumb">My Works</span>
+      </div>
+
+      <!-- Phase 2 Apps -->
+      <section>
+        <p class="section-title">CPIT-405 Phase 2 Apps</p>
+        <div class="works-grid">
+
+          <!-- App 1 -->
+          <div class="work-card">
+            <div class="work-card-preview">
+              <div class="preview-bg">🍅</div>
+              🍅
+              <span class="work-badge badge-js">JavaScript</span>
+            </div>
+            <div class="work-card-body">
+              <h3>Pomodoro Timer</h3>
+              <p>A productivity timer built entirely in the browser using vanilla JavaScript. Stay focused with customizable work/break intervals, session tracking, and sound alerts.</p>
+              <ul class="feature-list">
+                <li>Customizable focus & break durations</li>
+                <li>Animated progress ring</li>
+                <li>Session log saved with localStorage</li>
+                <li>Sound notification on timer end</li>
+              </ul>
+              <div class="work-card-footer">
+                <div class="work-tech-chips">
+                  <span class="work-tech-chip">HTML</span>
+                  <span class="work-tech-chip">CSS</span>
+                  <span class="work-tech-chip">JavaScript</span>
+                  <span class="work-tech-chip">localStorage</span>
+                </div>
+                <a href="app1.html" class="btn-open-app">Open App →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- App 2 -->
+          <div class="work-card">
+            <div class="work-card-preview">
+              <div class="preview-bg">🐱</div>
+              🐱
+              <span class="work-badge badge-api">JavaScript + API</span>
+            </div>
+            <div class="work-card-body">
+              <h3>Cat Explorer</h3>
+              <p>A cat image discovery app powered by TheCatAPI. Browse random cats, filter by breed, view breed info like origin and description, and click any cat for a full-size preview.</p>
+              <ul class="feature-list">
+                <li>Live data via TheCatAPI using fetch()</li>
+                <li>Breed dropdown filter</li>
+                <li>Loading states & error handling</li>
+                <li>Full-size modal with breed info</li>
+              </ul>
+              <div class="work-card-footer">
+                <div class="work-tech-chips">
+                  <span class="work-tech-chip">HTML</span>
+                  <span class="work-tech-chip">CSS</span>
+                  <span class="work-tech-chip">JavaScript</span>
+                  <span class="work-tech-chip">TheCatAPI</span>
+                </div>
+                <a href="app2.html" class="btn-open-app">Open App →</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Previous Projects -->
+      <section class="prev-projects">
+        <p class="section-title">Other Projects</p>
+        <div class="works-grid">
+
+          <div class="work-card">
+            <div class="work-card-preview">
+              <div class="preview-bg">🎮</div>
+              🎮
+              <span class="work-badge badge-api">Full Stack</span>
+            </div>
+            <div class="work-card-body">
+              <h3>GameBox</h3>
+              <p>A social game review platform built with React, Node.js, and Firebase. Integrates the IGDB API for rich game metadata, with user auth, reviews, and a community feed.</p>
+              <div class="work-card-footer">
+                <div class="work-tech-chips">
+                  <span class="work-tech-chip">React</span>
+                  <span class="work-tech-chip">Firebase</span>
+                  <span class="work-tech-chip">Node.js</span>
+                  <span class="work-tech-chip">IGDB API</span>
+                </div>
+                <a href="#" class="btn-open-app">View →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-card-preview">
+              <div class="preview-bg">✅</div>
+              ✅
+              <span class="work-badge badge-js">Java</span>
+            </div>
+            <div class="work-card-body">
+              <h3>Habit Tracker</h3>
+              <p>A Java desktop application for tracking daily habits with SQLite persistence. Built with NetBeans and Java Swing as part of CPIT-305.</p>
+              <div class="work-card-footer">
+                <div class="work-tech-chips">
+                  <span class="work-tech-chip">Java</span>
+                  <span class="work-tech-chip">SQLite</span>
+                  <span class="work-tech-chip">Swing</span>
+                </div>
+                <a href="#" class="btn-open-app">View →</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <span>© 2026 Yazan Basnawi · <span>CPIT-405 Portfolio</span> · KAU</span>
+    <span>Spring 2026</span>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.addEventListener('click', e => {
+      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) sidebar.classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>

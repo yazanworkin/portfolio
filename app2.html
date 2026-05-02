@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yazan – Cat Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .search-bar {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar button {
+      padding: 0.7rem 1.5rem;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .search-bar button:hover {
+      background: #d4ff26;
+      transform: translateY(-1px);
+    }
+
+    .search-bar select {
+      flex: 1;
+      font-size: 0.88rem;
+    }
+
+    /* Filter chips */
+    .filter-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .filter-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+
+    .filter-chip {
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-chip:hover,
+    .filter-chip.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Results bar */
+    .results-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Cat grid */
+    .cat-grid {
+      columns: 3;
+      column-gap: 0.75rem;
+    }
+
+    @media (max-width: 700px) { .cat-grid { columns: 2; } }
+    @media (max-width: 400px) { .cat-grid { columns: 1; } }
+
+    .cat-card {
+      break-inside: avoid;
+      margin-bottom: 0.75rem;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .cat-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-border);
+    }
+
+    .cat-card img {
+      width: 100%;
+      display: block;
+    }
+
+    .cat-card .cat-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.75));
+      padding: 1rem 0.5rem 0.5rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .cat-card:hover .cat-overlay { opacity: 1; }
+
+    .cat-breed {
+      font-size: 0.72rem;
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+
+    .cat-origin {
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 2px;
+    }
+
+    /* Skeleton */
+    .cat-skeleton {
+      break-inside: avoid;
+      margin-bottom: 0.75rem;
+      border-radius: 10px;
+      background: var(--bg-card2);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+
+    /* State messages */
+    .state-msg {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-muted);
+    }
+
+    .state-msg .icon { font-size: 3rem; margin-bottom: 0.75rem; }
+    .state-msg h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .state-msg p { font-size: 0.85rem; }
+
+    /* Modal */
+    .cat-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .cat-modal.open { display: flex; }
+
+    .cat-modal-inner {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .cat-modal img {
+      width: 100%;
+      display: block;
+      max-height: 400px;
+      object-fit: cover;
+    }
+
+    .cat-modal-info {
+      padding: 1.25rem;
+    }
+
+    .cat-modal-info h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .cat-modal-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .cat-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      padding: 0 1.25rem 1.25rem;
+    }
+
+    .modal-close-btn {
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      border-color: var(--accent-border);
+      color: var(--accent);
+    }
+
+    .load-more-wrap {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    /* Count selector */
+    .count-select {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .count-select select {
+      width: auto;
+      padding: 0.3rem 0.5rem;
+      font-size: 0.75rem;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Modal -->
+  <div class="cat-modal" id="catModal" onclick="closeModal(event)">
+    <div class="cat-modal-inner">
+      <img id="modalImg" src="" alt="Cat" />
+      <div class="cat-modal-info">
+        <h3 id="modalBreed">Cat</h3>
+        <p id="modalDesc"></p>
+        <p id="modalOrigin"></p>
+      </div>
+      <div class="cat-modal-footer">
+        <button class="modal-close-btn" onclick="document.getElementById('catModal').classList.remove('open')">Close ✕</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <header>
+        <div class="sidebar-brand">
+          <h1>Yazan<br><span>Portfolio</span></h1>
+          <p>CPIT-405 · Spring 2026</p>
+        </div>
+        <div class="sidebar-avatar">YA</div>
+        <nav class="sidebar-nav">
+          <p class="nav-label">Navigation</p>
+          <ul>
+            <li><a href="index.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a></li>
+            <li><a href="cv.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>CV / Resume</a></li>
+            <li><a href="labs.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Labs</a></li>
+            <li><a href="myworks.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>My Works</a></li>
+            <li><a href="contact.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="sidebar-info">
+        <div class="info-row">
+          <div class="info-item"><span>App</span><span>Cat Explorer</span></div>
+          <div class="info-item"><span>API</span><span>TheCatAPI</span></div>
+        </div>
+        <div class="sidebar-socials">
+          <a href="https://github.com/yazanworkin" target="_blank" class="social-icon">GH</a>
+          <a href="https://www.linkedin.com/in/yazan-basnawi" target="_blank" class="social-icon">in</a>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="page-header">
+        <h2>Cat <span class="highlight">Explorer</span></h2>
+        <span class="breadcrumb">App 2 · TheCatAPI</span>
+      </div>
+
+      <section>
+
+        <div class="search-bar">
+          <select id="breedSelect" onchange="fetchByBreed()">
+            <option value="">🐱 All Breeds (Random)</option>
+          </select>
+          <button onclick="loadCats()">Fetch Cats 🐾</button>
+        </div>
+
+        <div class="filter-row">
+          <span class="filter-label">Quick:</span>
+          <button class="filter-chip" onclick="setCount(5)">5 cats</button>
+          <button class="filter-chip active" onclick="setCount(10)">10 cats</button>
+          <button class="filter-chip" onclick="setCount(15)">15 cats</button>
+          <button class="filter-chip" onclick="setCount(20)">20 cats</button>
+        </div>
+
+        <div class="results-bar" id="resultsBar" style="display:none;">
+          <span id="resultsCount"></span>
+        </div>
+
+        <div id="catContainer">
+          <div class="state-msg">
+            <div class="icon">🐱</div>
+            <h3>Welcome to Cat Explorer</h3>
+            <p>Click "Fetch Cats" to load random cats,<br>or pick a breed from the dropdown.<br>Powered by TheCatAPI.</p>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <span>© 2026 Yazan Basnawi · <span>CPIT-405 Portfolio</span> · KAU</span>
+    <span>Spring 2026</span>
+  </footer>
+
+  <script>
+    // ===== Sidebar =====
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.addEventListener('click', e => {
+      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) sidebar.classList.remove('open');
+    });
+
+    // ===== TheCatAPI =====
+    const API_KEY = 'live_p5RYv4xmXsB9CmAnQFWt5tnTWsGPmf7NcZ7il7JZ2j3inU7ZCeycYRyaehVXagMW'; 
+    const BASE = 'https://api.thecatapi.com/v1';
+    let fetchCount = 10;
+    let selectedBreed = '';
+    let modalData = {};
+
+    // Load breeds into dropdown
+    async function loadBreeds() {
+      try {
+        const res = await fetch(`${BASE}/breeds`, {
+          headers: { 'x-api-key': API_KEY }
+        });
+        const breeds = await res.json();
+        const select = document.getElementById('breedSelect');
+        breeds.forEach(b => {
+          const opt = document.createElement('option');
+          opt.value = b.id;
+          opt.textContent = `${b.name} — ${b.origin || ''}`;
+          select.appendChild(opt);
+        });
+      } catch(e) {
+        console.error('Could not load breeds', e);
+      }
+    }
+
+    function setCount(n) {
+      fetchCount = n;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function fetchByBreed() {
+      selectedBreed = document.getElementById('breedSelect').value;
+      loadCats();
+    }
+
+    function showLoading() {
+      const heights = [200, 160, 240, 180, 210, 170, 230, 190, 220, 150];
+      const skeletons = Array.from({length: fetchCount}, (_, i) =>
+        `<div class="cat-skeleton" style="height:${heights[i % heights.length]}px;"></div>`
+      ).join('');
+      document.getElementById('catContainer').innerHTML = `<div class="cat-grid">${skeletons}</div>`;
+      document.getElementById('resultsBar').style.display = 'none';
+    }
+
+    async function loadCats() {
+      showLoading();
+      try {
+        let url = `${BASE}/images/search?limit=${fetchCount}&has_breeds=1`;
+        if (selectedBreed) url += `&breed_ids=${selectedBreed}`;
+
+        const res = await fetch(url, {
+          headers: { 'x-api-key': API_KEY }
+        });
+
+        if (!res.ok) throw new Error('API error ' + res.status);
+        const cats = await res.json();
+
+        if (cats.length === 0) {
+          document.getElementById('catContainer').innerHTML = `
+            <div class="state-msg">
+              <div class="icon">😿</div>
+              <h3>No cats found</h3>
+              <p>Try a different breed or try again.</p>
+            </div>`;
+          return;
+        }
+
+        renderCats(cats);
+
+      } catch(e) {
+        document.getElementById('catContainer').innerHTML = `
+          <div class="state-msg">
+            <div class="icon">😿</div>
+            <h3>Something went wrong</h3>
+            <p>${e.message}. Check your API key or connection.</p>
+          </div>`;
+      }
+    }
+
+    function renderCats(cats) {
+      const bar = document.getElementById('resultsBar');
+      bar.style.display = 'flex';
+      const breedName = selectedBreed
+        ? document.getElementById('breedSelect').selectedOptions[0].text.split(' — ')[0]
+        : 'All Breeds';
+      document.getElementById('resultsCount').textContent =
+        `Showing ${cats.length} cats — ${breedName}`;
+
+      const html = cats.map((cat, i) => {
+        const breed = cat.breeds?.[0];
+        const name = breed?.name || 'Random Cat';
+        const origin = breed?.origin || '';
+        const desc = breed?.description || '';
+        return `
+          <div class="cat-card" onclick="openModal('${cat.url}', '${name.replace(/'/g,"\\'")}', '${origin}', \`${desc.replace(/`/g,"\\`").replace(/'/g,"\\'")}\`)">
+            <img src="${cat.url}" alt="${name}" loading="lazy" />
+            <div class="cat-overlay">
+              <div class="cat-breed">${name}</div>
+              ${origin ? `<div class="cat-origin">📍 ${origin}</div>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+
+      document.getElementById('catContainer').innerHTML = `<div class="cat-grid">${html}</div>`;
+    }
+
+    function openModal(url, breed, origin, desc) {
+      document.getElementById('modalImg').src = url;
+      document.getElementById('modalBreed').textContent = breed;
+      document.getElementById('modalDesc').textContent = desc || '';
+      document.getElementById('modalOrigin').textContent = origin ? `📍 Origin: ${origin}` : '';
+      document.getElementById('catModal').classList.add('open');
+    }
+
+    function closeModal(e) {
+      if (e.target === document.getElementById('catModal')) {
+        document.getElementById('catModal').classList.remove('open');
+      }
+    }
+
+    // Init
+    loadBreeds();
+    loadCats();
+  </script>
+</body>
+</html>
